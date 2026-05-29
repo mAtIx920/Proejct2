@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pickle
 from datetime import datetime
@@ -6,7 +7,8 @@ import pandas as pd
 startTime = datetime.now()
 # import znanych nam bibliotek
 
-filename = "ml_models/titanic_model.pkl"
+base_path = os.path.dirname(__file__)
+filename = os.path.join(base_path, "ml_models/titanic_model.pkl")
 model = pickle.load(open(filename, 'rb'))
 # otwieramy wcześniej wytrenowany model
 
@@ -47,7 +49,7 @@ def main():
 
     with prediction:
         st.header("Czy dana osoba przeżyje? {0}".format("Tak" if survival[0] == 1 else "Nie"))
-        st.subheader("Pewność predykcji {0:.2f} %".format(s_confidence[0][survival][0] * 100))
+        st.subheader("Pewność predykcji {0:.2f} %".format(s_confidence[0][survival[0]] * 100))
 
 
 if __name__ == "__main__":
